@@ -1,0 +1,66 @@
+#element {
+  background: black;
+  color: white;
+  height: 100px;
+  width: 100px;
+}
+
+#container {
+  background: lightblue;
+  height: 200px;
+  width: 200px;
+}
+
+#drop {
+  background: blueviolet;
+  height: 200px;
+  margin: 50px;
+  width: 200px;
+}
+
+#drop2 {
+  background: darkorange;
+  height: 200px;
+  margin: 50px;
+  width: 200px;
+}
+
+.dragNdrop::before {
+  content: 'I am draggable';
+  display: block;
+}
+
+.dragNdrop--start::before {
+  content: 'Start';
+  display: block;
+}
+
+.dragNdrop--drag::before {
+  content: 'Drag';
+  display: block;
+}
+
+.dragNdrop--stop::before {
+  content: 'Stop';
+  display: block;
+}
+
+.dragNdrop--dropped::after {
+  content: 'I was dropped into container';
+  display: block;
+}
+
+.dragNdrop--dropable::after {
+  content: 'I can be dropped into container';
+  display: block;
+}
+
+.dragNdrop__drop--ready::after {
+  content: 'drop me here!';
+  display: block;
+}
+
+.dragNdrop__drop--dropped::after {
+  content: 'dropped inside container';
+  display: block;
+}
