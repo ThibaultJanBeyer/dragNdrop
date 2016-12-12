@@ -1,9 +1,11 @@
+```text
      _                     __    _
   __| |_ __ __ _  __ _  /\ \ \__| |_ __ ___  _ __
  / _` | '__/ _` |/ _` |/  \/ / _` | '__/ _ \| '_ \
 | (_| | | | (_| | (_| / /\  | (_| | | | (_) | |_) |
  \__,_|_|  \__,_|\__, \_\ \/ \__,_|_|  \___/| .__/
                  |___/                      |_|
+```
 
 #dragNdrop
 
@@ -32,7 +34,7 @@ Because there was nothing this small that does not require jquery out there.
 
 ####easy
 
-Just [download the file](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dragNdrop.js) ([minified](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dNd.min.js)) and add it to your document:
+Just [download the file](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dragNdrop.js) ([minified](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dNd.min.js)) and add it to your document:  
 `<script src="https://thibaultjanbeyer.github.io/dragNdrop/dNd.min.js"></script>`
 
 ####npm
