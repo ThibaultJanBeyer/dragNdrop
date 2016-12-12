@@ -9,6 +9,7 @@ var scsslint = require('gulp-scss-lint');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var csso = require('gulp-csso');
+var ghPages = require('gulp-gh-pages');
 
 gulp.task('js', function () {
   gulp.src('./src/dragNdrop.js')
@@ -39,6 +40,11 @@ gulp.task('html', function () {
     .pipe(htmlhint())
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('deploy', function () {
+  return gulp.src('./dist/**/*')
+    .pipe(ghPages());
 });
 
 gulp.task('default', ['js', 'html', 'css']);
