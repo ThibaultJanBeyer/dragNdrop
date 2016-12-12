@@ -35,16 +35,21 @@ Because there was nothing this small that does not require jquery out there.
 ###easy
 
 Just [download the file](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dragNdrop.js) ([minified](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dNd.min.js)) and add it to your document:  
-`<script src="https://thibaultjanbeyer.github.io/dragNdrop/dNd.min.js"></script>`
+```html
+<script src="https://thibaultjanbeyer.github.io/dragNdrop/dNd.min.js"></script>`
+```
 
 ###npm
 
-`npm install --save-dev npm-dragndrop`
-
+```
+npm install --save-dev npm-dragndrop`
+```
 
 ###bower
 
-`npm install --save-dev dragndrop`
+```
+npm install --save-dev dragndrop
+```
 
 That's it, you're ready to rock!  
 Of course you can also just include the function within your code to save a request.
