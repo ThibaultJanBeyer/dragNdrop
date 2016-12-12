@@ -48,7 +48,7 @@ npm install --save-dev npm-dragndrop
 ###bower
 
 ```
-npm install --save-dev dragndrop
+bower install --save-dev dragndrop
 ```
 
 That's it, you're ready to rock!  
