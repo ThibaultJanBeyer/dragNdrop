@@ -126,4 +126,4 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 
 ###Have Fun!
 
-![Typewriter Gif](https://thibaultjanbeyer.github.io/dragNdrop/typewriter.gif)
+[![Typewriter Gif](https://thibaultjanbeyer.github.io/dragNdrop/typewriter.gif)](http://thibaultjanbeyer.com/)
