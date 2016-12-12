@@ -1,0 +1,39 @@
+{
+  "name": "dragndrop",
+  "version": "1.0.0",
+  "description": "easily add drag & drop functionality to your project",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-csso": "^2.0.0",
+    "gulp-htmlhint": "^0.3.1",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-jshint": "^2.0.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.0.0",
+    "gulp-scss-lint": "^0.4.0",
+    "gulp-uglify": "^2.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThibaultJanBeyer/dragNdrop.git"
+  },
+  "keywords": [
+    "drag",
+    "drop",
+    "plain",
+    "js",
+    "javascript",
+    "vanillajs"
+  ],
+  "author": "Thibault Jan Beyer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ThibaultJanBeyer/dragNdrop/issues"
+  },
+  "homepage": "https://ThibaultJanBeyer.com/"
+}

@@ -3,13 +3,42 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var htmlhint = require('gulp-htmlhint');
+var htmlmin = require('gulp-htmlmin');
+var scsslint = require('gulp-scss-lint');
+var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var csso = require('gulp-csso');
 
 gulp.task('js', function () {
-  return gulp.src('./src/js/dragNdrop.js')
+  gulp.src('./src/dragNdrop.js')
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(gulp.dest('./dist/'))
     .pipe(uglify())
     .pipe(rename('dNd.min.js'))
     .pipe(gulp.dest('./dist/'));
+
+  gulp.src('./src/example.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist/'));
 });
+
+gulp.task('css', function () {
+  gulp.src('./src/example.css')
+    .pipe(scsslint())
+    .pipe(autoprefixer())
+    .pipe(csso())
+    .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('html', function () {
+  gulp.src('./src/index.html')
+    .pipe(htmlhint())
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('default', ['js', 'html', 'css']);
