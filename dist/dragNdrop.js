@@ -12,8 +12,8 @@ v1.0.0
 
  ** dragNdrop:start
  ** dragNdrop:drag
- ** dragNdrop:drop
  ** dragNdrop:stop
+ ** dragNdrop:dropped
 
 
  Classes
@@ -36,10 +36,10 @@ v1.0.0
  ** @dropElements   nodes             false / array of DOM elements
  ** @callback       function          function that gets fired when dropped
 
- ***     @callback function can optain event object with following keys/values:
- ***     @element,
- ***     @dropped  (false / array of DOM elements the element was dropped into),
- ***     @drop, @constraints, @customStyles
+ ***     @callback function can obtains an event object with following keys/values:
+ ****        @element,
+ ****        @dropped  (false / array of DOM elements the element was dropped into),
+ ****        @drop, @constraints, @customStyles
 
 
  ******************************************
@@ -181,12 +181,18 @@ function dragNdrop(options) {
      * resized or moved on the fly. This also makes the function kinda context
      * independant.
      */
-    var containerRect = container.getBoundingClientRect();
+    var containerRect = {
+      top: container.getBoundingClientRect().top + window.scrollY,
+      left: container.getBoundingClientRect().left + window.scrollX
+    };
     var containerSize = {
       top: container.offsetHeight,
       left: container.offsetWidth
     };
-    var elementRect = element.getBoundingClientRect();
+    var elementRect = {
+      top: element.getBoundingClientRect().top + window.scrollY,
+      left: element.getBoundingClientRect().left + window.scrollX,
+    };
     var elementSize = {
       top: element.offsetHeight,
       left: element.offsetWidth
