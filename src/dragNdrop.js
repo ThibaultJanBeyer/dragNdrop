@@ -105,6 +105,7 @@ function dragNdrop(options) {
   function setStyles(element) {
     var cursor, style = element.style;
     style.position = 'absolute';
+    style.zIndex = '999';
 
     if(constraints && constraints === 'x' || constraints === 'y') {
       cursor = constraints === 'x' ? 'col-resize' : 'row-resize';
@@ -123,6 +124,7 @@ function dragNdrop(options) {
     addClass(element, 'dragNdrop--drag');
 
     if(dropElements) prepareDrop(element, dropElements);
+    if(!customStyles) element.style.zIndex = '9999';
 
     if ('touches' in ev) { // slight adaptations for touches
       ev.preventDefault();
@@ -191,7 +193,7 @@ function dragNdrop(options) {
     };
     var elementRect = {
       top: element.getBoundingClientRect().top + window.scrollY,
-      left: element.getBoundingClientRect().left + window.scrollX,
+      left: element.getBoundingClientRect().left + window.scrollX
     };
     var elementSize = {
       top: element.offsetHeight,
