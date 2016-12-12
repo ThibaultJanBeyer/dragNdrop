@@ -51,9 +51,8 @@ body {
 }
 
 .main-header {
-  height: 50%;
   width: 100%;
-  min-height: 350px;
+  height: 335px;
   color: #f6f6f6;
   text-align: center;
   background-color: #6885d0;
@@ -74,9 +73,8 @@ a:hover {
 
 .main-header__content {
   position: absolute;
-  top: 25%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
 }
 
 .main-header__btn {
