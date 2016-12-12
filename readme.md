@@ -120,3 +120,5 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |.dragNdrop__drop--dropped |on dropcontainer when an element is successfully dropped inside |
 
 ###Have Fun!
+
+![Typewriter Gif](https://thibaultjanbeyer.github.io/dragNdrop/typewriter.gif)
