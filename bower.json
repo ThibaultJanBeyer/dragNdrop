@@ -1,0 +1,25 @@
+{
+  "name": "dragNdrop",
+  "description": "easily add drag & drop functionality to your project",
+  "main": "./dist/dNd.min.js",
+  "authors": [
+    "Thibault Jan Beyer"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "drag",
+    "drop",
+    "plain",
+    "js",
+    "javascript",
+    "vanillajs"
+  ],
+  "homepage": "https://github.com/ThibaultJanBeyer/dragNdrop",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
