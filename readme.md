@@ -36,13 +36,13 @@ Because there was nothing this small that does not require jquery out there.
 
 Just [download the file](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dragNdrop.js) ([minified](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dNd.min.js)) and add it to your document:  
 ```html
-<script src="https://thibaultjanbeyer.github.io/dragNdrop/dNd.min.js"></script>`
+<script src="https://thibaultjanbeyer.github.io/dragNdrop/dNd.min.js"></script>
 ```
 
 ###npm
 
 ```
-npm install --save-dev npm-dragndrop`
+npm install --save-dev npm-dragndrop
 ```
 
 ###bower
