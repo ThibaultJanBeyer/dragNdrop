@@ -39,7 +39,7 @@ v1.1.0
  .dragNdrop--stop               on element release
  .dragNdrop--dropped            on successful element drop into container
  .dragNdrop--dropable           on element that can be dropped into at least one container
- .dragNdrop--dropzone           on every dropZone
+ .dragNdrop__dropzone           on every dropZone
  .dragNdrop__dropzone--ready    on dropZone when element is dragged
  .dragNdrop__dropzone--dropped  on dropZone when an element is successfully dropped inside
 
