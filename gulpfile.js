@@ -19,12 +19,6 @@ gulp.task('js', function () {
     .pipe(uglify())
     .pipe(rename('dNd.min.js'))
     .pipe(gulp.dest('./dist/'));
-
-  gulp.src('./src/example.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('css', function () {
