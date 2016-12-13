@@ -20,7 +20,7 @@ easily add drag & drop functionality to dom nodes
 - Add draggability to any DOM element
 - Add corresponding drop containers
 - Callback, Classes and Events available
-- Tested on all browsers, IE9 up
+- Awesome browser support, works even on IE8
 - Ease of use
 - Lightweight, only 1KB gzipped
 - Free & open source under MIT License
@@ -63,23 +63,25 @@ Now in your JavaScript you can simply pass elements to the function like so:
 ```javascript
 dragNdrop({
   element: document.getElementById('element1'), // draggable element
-  dropElements: [ document.getElementById('dropContainer1') ] // dropzone (optional)
+  dropZones: [ document.getElementById('dropContainer1') ] // dropzone (optional)
 });
 ```
 **complete**
 ```javascript
 dragNdrop({
   // element to be dragged (DOM element)
-  element: document.getElementById('element1'),
+  element: document.getElementById('element1'), // (optional, default: '#dragNdrop-element')
   // custom styles (false / true)
-  customStyles: false, // (optional)
+  customStyles: false, // (optional, default: false)
+  // custom styles (true / false)
+  useTransform: true, // (optional, default: true)
   // constraints (false / 'x' / 'y' / DOM element)
-  constraints: false, // (optional)
+  constraints: false, // (optional, default: false)
   // drop (false / DOM element)
-  dropElements: [ document.getElementById('dropContainer1') ], // (optional)
+  dropZones: [ document.getElementById('dropContainer1') ], // (optional, default: '#dragNdrop-dropZone')
   // callback(event){}
   callback: function(event) { // (optional)
-    // event.element, event.dropped, event.dropElements, event.constraints, event.customStyles
+    // event.element, event.dropped, event.dropZones, event.constraints, event.customStyles
   }
 });
 ```
@@ -92,7 +94,7 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |element |single DOM element (node) |the element that will be draggable |
 |customStyles |false / true (boolean) |when set to true, no styles will be added by the plugin |
 |constraints |false / 'x' / 'y' / single DOM element (boolean/ string/ node) |constrain the element: 'x' = element can only be dragged on the x axis. 'y' = element can only be dragged on the y axis. DOM element = element can only be dragged within that container |
-|dropElements |false / array of DOM element(s) (node(s)) |one or more drop-elements (where the element can be dropped into) |
+|dropZones |false / array of DOM element(s) (node(s)) |one or more drop-elements (where the element can be dropped into) |
 |callback |function |a callback function (taking an event object) that gets fired when the element is dropped |
 
 ##Callback Event Object:
@@ -102,7 +104,7 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |dropped |false = element was not dropped into a drop-container. [node] = array of dom elements = drop-containers in which the element was dropped |
 |customStyles |false / true |
 |constraints |false / 'x' / 'y' / single DOM element |
-|dropElements |one or more drop-elements (where the element can be dropped into) |
+|dropZones |one or more drop-elements (where the element can be dropped into) |
 
 ##Events
 | name | trigger |
@@ -121,8 +123,9 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |.dragNdrop--stop |on element release |
 |.dragNdrop--dropped |on successful element drop into container |
 |.dragNdrop--dropable |on element that can be dropped into at least one container |
-|.dragNdrop__drop--ready |on corresponding dropcontainer when element is dragged |
-|.dragNdrop__drop--dropped |on dropcontainer when an element is successfully dropped inside |
+|.dragNdrop__dropzone |on each dropZone |
+|.dragNdrop__dropzone--ready |on corresponding dropZone when element is dragged |
+|.dragNdrop__dropzone--dropped |on dropZone when an element is successfully dropped inside |
 
 ###Have Fun!
 

@@ -2,21 +2,20 @@
 @import url(https://fonts.googleapis.com/css?family=Grand+Hotel);
 @import url(https://fonts.googleapis.com/css?family=Fira+Mono);
 
-html, body {
-  height: 100%;
-  width: 100%;
+html,
+body {
   margin: 0;
   padding: 0;
 }
 
 body {
-  font-weight: 400;
-  color: #333;
   background-color: #f6f6f6;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizelegibility;
-  font-feature-settings: "liga", "kern";
+  color: #333;
   font-family: 'Fira Sans', sans-serif;
+  font-feature-settings: "liga", "kern";
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  text-rendering: optimizelegibility;
 }
 
 .navbar {
@@ -24,17 +23,23 @@ body {
 }
 
 .navbar__link {
+  border-right: 1px solid rgba(255, 255, 255, .3);
   padding: 0 15px;
-  border-right: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .navbar__link:last-child {
-  border-right: none;
+  border-right: 0;
+}
+
+.main-header__content {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 @media screen and (max-width: 400px) {
   .navbar__link:nth-child(2) {
-    border-right: none;
+    border-right: 0;
   }
 
   .navbar__link:last-child {
@@ -42,21 +47,21 @@ body {
   }
 
   .main-header__content {
-    position: relative !important;
-    transform:none !important;
-    top: 0 !important;
-    left: 0 !important;
+    left: 0;
     margin-top: 50px;
+    position: relative;
+    top: 0;
+    transform: none;
   }
 }
 
 .main-header {
-  width: 100%;
-  height: 335px;
-  color: #f6f6f6;
-  text-align: center;
   background-color: #6885d0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+  color: #f6f6f6;
+  height: 335px;
+  text-align: center;
+  width: 100%;
 }
 
 .main-header a {
@@ -71,61 +76,55 @@ a:hover {
   text-decoration: underline;
 }
 
-.main-header__content {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .main-header__btn {
-  color: #6885d0;
-  padding: 10px;
-  text-transform: uppercase;
-  display: inline-block;
-  font-weight: bold;
-  transition: box-shadow 0.1s linear, transform 0.1s linear;
   background: linear-gradient(to bottom, #ffef5a, #d4cb72);
   box-shadow: 0 0 1px #c6bd64, 0 1px 1px #aaa155,
               0 1px 1px #c6bd64, 0 2px 1px #aaa155,
               0 2px 1px #c6bd64, 0 3px 1px #aaa155,
               0 3px 1px #c6bd64, 0 4px 1px #aaa155,
               0 4px 1px #c6bd64, 0 5px 1px #aaa155,
-              0 5px 1px #c6bd64, 0 7px 0 rgba(0, 0, 0, 0.05),
-              0 8px 0 rgba(0, 0, 0, 0.05), 0 9px 0 rgba(0, 0, 0, 0.04),
-              0 10px 0 rgba(0, 0, 0, 0.04), 0 11px 0 rgba(0, 0, 0, 0.03),
-              0 12px 0 rgba(0, 0, 0, 0.03), 0 13px 0 rgba(0, 0, 0, 0.02),
-              0 14px 0 rgba(0, 0, 0, 0.02), 0 15px 0 rgba(0, 0, 0, 0.01),
-              0 16px 0 rgba(0, 0, 0, 0.01), 0 17px 0 rgba(0, 0, 0, 0.01),
-              0 18px 0 rgba(0, 0, 0, 0.01), inset 0 4px 5px -2px rgba(255, 255, 255, 0.5),
-              inset 0 1px 0 0 rgba(0, 0, 0, 0.3);
+              0 5px 1px #c6bd64, 0 7px 0 rgba(0, 0, 0, .05),
+              0 8px 0 rgba(0, 0, 0, .05), 0 9px 0 rgba(0, 0, 0, .04),
+              0 10px 0 rgba(0, 0, 0, .04), 0 11px 0 rgba(0, 0, 0, .03),
+              0 12px 0 rgba(0, 0, 0, .03), 0 13px 0 rgba(0, 0, 0, .02),
+              0 14px 0 rgba(0, 0, 0, .02), 0 15px 0 rgba(0, 0, 0, .01),
+              0 16px 0 rgba(0, 0, 0, .01), 0 17px 0 rgba(0, 0, 0, .01),
+              0 18px 0 rgba(0, 0, 0, .01), inset 0 4px 5px -2px rgba(255, 255, 255, .5),
+              inset 0 1px 0 0 rgba(0, 0, 0, .3);
+  color: #6885d0;
+  display: inline-block;
+  font-weight: bold;
+  padding: 10px;
+  text-transform: uppercase;
+  transition: box-shadow .1s linear, transform .1s linear;
 }
 
 .main-header__btn:active {
-  box-shadow: inset 1px 2px 3px rgba(0,0,0,0.2);
-  transform: translate3d(0px, 6px, 0);
+  box-shadow: inset 1px 2px 3px rgba(0, 0, 0, .2);
+  transform: translate3d(0, 6px, 0);
 }
 
 .main-info {
-  max-width: 1024px;
   margin: 0 auto;
+  max-width: 1024px;
   min-height: 400px;
 }
 
 .benefits {
-  padding: 0 50px 25px 50px;
+  padding: 0 50px 25px;
 }
 
 .benefit {
   float: left;
-  width: 47.5%;
-  margin-top: 40px;
-  margin-right: 2%;
   height: 120px;
+  margin-right: 2%;
+  margin-top: 40px;
+  width: 47.5%;
 }
 
 .benefit:nth-child(2n) {
-  margin-right: 0;
   float: right;
+  margin-right: 0;
 }
 
 .benefit-text {
@@ -135,67 +134,64 @@ a:hover {
 @media screen and (max-width: 600px) {
   .benefit {
     float: none;
-    width: 100%;
     height: inherit;
     margin: 0;
     padding: 20px 0;
+    width: 100%;
   }
 }
 
 .documentation {
-  max-width: 550px;
   margin: 0 auto;
+  max-width: 550px;
   padding: 0 25px;
 }
 
 .documentation h3 {
-  text-align: center;
   font-size: 2.5em;
   margin-bottom: 0;
   margin-top:15px;
+  text-align: center;
 }
 
 .documentation h4 {
+  border-top: 1px dashed rgba(0, 0, 0, .1);
   font-size: 1.5em;
   margin-top: 1em;
-  border-top: 1px dashed rgba(0,0,0,0.1);
   padding-top: 1em;
 }
 
 .typewriter {
   text-align: center;
-}
-
-#typewriter {
   width: 67%;
 }
 
 .cp_embed_wrapper {
-  width: 120%;
   margin-left: -10%;
+  width: 120%;
 }
 
 @media screen and (max-width: 600px) {
   .cp_embed_wrapper {
-    width: 100%;
     margin-left: 0;
+    width: 100%;
   }
 }
 
 .doc-navigation {
-  position: fixed;
+  background: white;
+  font-size: .8em;
   left: 0;
+  padding: 10px 5px;
+  position: fixed;
   top: 0;
   width: 135px;
-  background: white;
-  font-size: 0.8em;
-  padding: 10px 5px;
 }
 
 .doc-navigation ul {
   list-style-type: none;
-  padding:0;
-  margin:0;
+  margin: 0;
+  padding: 0;
 }
 
 table {
@@ -203,21 +199,21 @@ table {
 }
 
 td {
-  border-top: 1px solid rgba(0,0,0,0.2);
-  vertical-align: top;
+  border-top: 1px solid rgba(0, 0, 0, .2);
   padding:2% 1%;
+  vertical-align: top;
 }
 
 .prettyprint {
-  width: 95%;
-  padding: 10px;
+  background: #fafafa;
+  display: block;
   font-family: "Consolas", "Monaco", "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Courier New", monotype, sans-serif;
   font-size: 12px;
-  display: block;
-  tab-size: 2;
-  background: #fafafa;
-  white-space: pre;
   overflow: auto;
+  padding: 10px;
+  tab-size: 2;
+  white-space: pre;
+  width: 95%;
 }
 
 pre {
@@ -225,13 +221,13 @@ pre {
 }
 
 .footer {
-  height: 80px;
-  margin-top:50px;
-  width: 100%;
-  color: #f6f6f6;
-  text-align: center;
   background-color: #6885d0;
   box-shadow: 0 -2px 4px rgba(0,0,0,0.3);
+  color: #f6f6f6;
+  height: 80px;
+  margin-top:50px;
+  text-align: center;
+  width: 100%;
 }
 
 .footer a {

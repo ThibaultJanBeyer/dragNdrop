@@ -37,7 +37,7 @@
     <div class="benefits">
       <div class="benefit">
         <h2 class="benefit-title">Browser Support</h2>
-        <p class="benefit-text">dragNdrop was successfully tested on every browser, the oldest being ie9.</p>
+        <p class="benefit-text">dragNdrop was successfully tested on a wide range of browsers, it even works on ie8.</p>
       </div>
       <div class="benefit">
         <h2 class="benefit-title">Ease of use</h2>
@@ -71,7 +71,7 @@
           <a href="#twob">2b. Usage with constraints</a>
         </li>
         <li>
-          <a href="#twoc">2c. Usage with dropElements</a>
+          <a href="#twoc">2c. Usage with dropZones</a>
         </li>
         <li>
           <a href="#twod">2c. Usage with callback function</a>
@@ -124,7 +124,7 @@
   <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
 
-  <h4 id="twoc">2b. Usage with dropElements</h4>
+  <h4 id="twoc">2b. Usage with dropZones</h4>
   <p data-height="431" data-theme-id="light" data-slug-hash="pNOWeq" data-default-tab="js,result" data-user="ThibaultJanBeyer" data-embed-version="2" data-pen-title="dragNdrop with dropElements example" class="codepen">See the Pen <a href="http://codepen.io/ThibaultJanBeyer/pen/pNOWeq/">dragNdrop with dropElements example</a> by Thibault Jan Beyer (<a href="http://codepen.io/ThibaultJanBeyer">@ThibaultJanBeyer</a>) on <a href="http://codepen.io">CodePen</a>.</p>
   <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
@@ -168,7 +168,7 @@
           <br>DOM&nbsp;element = element can only be dragged within that container</td>
       </tr>
       <tr>
-        <td><span class="str">dropElements&nbsp;</span></td>
+        <td><span class="str">dropZones&nbsp;</span></td>
         <td>false / array of DOM element(s) (node(s))</td>
         <td>one or more drop-elements (where the element can be dropped into)</td>
       </tr>
@@ -204,7 +204,7 @@
       <td>false / 'x' / 'y' / single DOM element</td>
     </tr>
     <tr>
-      <td><span class="str">dropElements&nbsp;</span></td>
+      <td><span class="str">dropZones&nbsp;</span></td>
       <td>one or more drop-elements (where the element can be dropped into)</td>
     </tr>
     <tr>
@@ -274,12 +274,16 @@
       <td>on element that can be dropped into at least one container</td>
     </tr>
     <tr>
-      <td><span class="str">.dragNdrop__drop--ready</span></td>
-      <td>on corresponding dropcontainer when element is dragged</td>
+      <td><span class="str"> .dragNdrop--dropzone</span></td>
+      <td>on every dropZone</td>
     </tr>
     <tr>
-      <td><span class="str">.dragNdrop__drop--dropped</span></td>
-      <td>on dropcontainer when an element is successfully dropped inside</td>
+      <td><span class="str">.dragNdrop__dropzone--ready</span></td>
+      <td>on corresponding dropZone when element is dragged</td>
+    </tr>
+    <tr>
+      <td><span class="str">.dragNdrop__dropzone--dropped</span></td>
+      <td>on dropZone when an element is successfully dropped inside</td>
     </tr>
   </table>
 

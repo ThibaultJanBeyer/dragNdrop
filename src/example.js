@@ -6,7 +6,7 @@ dragNdrop({
   // constraints (false / 'x' / 'y' / DOM element)
   constraints: document.getElementById('container'),
   // drop (false / DOM element)
-  dropElements: [
+  dropZones: [
     document.getElementById('drop'),
     document.getElementById('drop2')
   ],

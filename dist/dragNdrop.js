@@ -8,7 +8,22 @@ v1.0.0
  \__,_|_|  \__,_|\__, \_\ \/ \__,_|_|  \___/| .__/ 
                  |___/                      |_|    
 
- Custom Events (>IE8):
+
+
+ ##Key-Features
+
+ - Add draggability to any DOM element
+ - Add corresponding drop containers
+ - Callback, Classes and Events available
+ - Awesome browser support, works even on IE8
+ - Ease of use
+ - Lightweight, only 1KB gzipped
+ - Free & open source under MIT License
+
+
+
+
+ Custom Events (only IE9+):
 
  ** dragNdrop:start
  ** dragNdrop:drag
@@ -18,23 +33,25 @@ v1.0.0
 
  Classes
 
- .dragNdrop                 on every draggable element
- .dragNdrop--start          on element click
- .dragNdrop--drag           on element drag
- .dragNdrop--stop           on element release
- .dragNdrop--dropped        on successful element drop into container
- .dragNdrop--dropable       on element that can be dropped into at least one container
- .dragNdrop__drop--ready    on dropcontainer when element is dragged
- .dragNdrop__drop--dropped  on dropcontainer when an element is successfully dropped inside
+ .dragNdrop                     on every draggable element
+ .dragNdrop--start              on element click
+ .dragNdrop--drag               on element drag
+ .dragNdrop--stop               on element release
+ .dragNdrop--dropped            on successful element drop into container
+ .dragNdrop--dropable           on element that can be dropped into at least one container
+ .dragNdrop--dropzone           on every dropZone
+ .dragNdrop__dropzone--ready    on dropZone when element is dragged
+ .dragNdrop__dropzone--dropped  on dropZone when an element is successfully dropped inside
 
 
  Properties
 
- ** @element        node              single DOM element
- ** @customStyles   boolean           false / true
- ** @constraints    string or node    false / 'x' / 'y' / single DOM element
- ** @dropElements   nodes             false / array of DOM elements
- ** @callback       function          function that gets fired when dropped
+ ** @element        node              single DOM element                          (Mandatory!) default: NaN
+ ** @customStyles   boolean           false / true                                (optional) default: false
+ ** @transform      boolean           true / false                                (optional) default: true
+ ** @constraints    string or node    false / 'x' / 'y' / single DOM element      (optional) default: false
+ ** @dropZones      nodes             false / array of DOM elements               (optional) default: false
+ ** @callback       function          function that gets fired when dropped       (optional) default: function(){}
 
  ***     @callback function can obtains an event object with following keys/values:
  ****        @element,
@@ -71,40 +88,102 @@ v1.0.0
  */
 
 function dragNdrop(options) {
+  //Errors
+  if(!options) {
+    console.log('ERROR: dragNdrop: please provide an options object to the function. See reference at: https://github.com/ThibaultJanBeyer/dragNdrop for more info');
+  } else if(options && !options.element) {
+    console.log('ERROR: dragNdrop: please provide an element (options.element) that will be made draggable to the function. See reference at: https://github.com/ThibaultJanBeyer/dragNdrop for more info');
+  }
+
   //Setup
-  var IE = false;
   var element = options.element;
-  var customStyles = options.customStyles;
-  var constraints = options.constraints;
-  var dropElements = options.dropElements;
-  var callback = options.callback;
+  var customStyles = options.customStyles || false;
+  var constraints = options.constraints || false;
+  var dropZones = options.dropZones || false;
+  var callback = options.callback || function(){};
+  var transform = options.transform || true;
 
+  var elementPos = { x: 0, y: 0 };
+  var prevPos = { x: 0, y: 0 };
+  var constraintElement = constraints && typeof constraints.innerHTML === "string"; //if constraints = DOM element
+
+  //check for old internet explorer versions
+  var div = document.createElement('div');
+  div.innerHTML = '<!--[if lt IE 9]><i id="ie-version-below-nine"></i><![endif]--><!--[if IE 9]><i id="ie-version-nine"></i><![endif]-->';
+  var isIeLessThan10 = (div.getElementsByTagName('i').length == 1);
+  if (isIeLessThan10) {
+    console.log('WARNING: dragNdrop: a browser older than IE 10 detected! ', ' (use top/left position instead of transform, attachEvent instead of addEventListener and initEvent instead of new Event constructor)');
+    console.log('WARNING: dragNdrop: the tool will probably work but please do yourself a favor and update your browser');
+    //internet explorer <9 does not support transform3d
+    transform = false;
+  }
+
+  //add startup classes
   addClass(element, 'dragNdrop');
-
-  //Styles
-  if(!customStyles) setStyles(element);
+  if(dropZones) {
+    for(var i = 0, il = dropZones.length; i < il; i++) {
+      addClass(dropZones[i], 'dragNdrop__dropzone');
+    }
+  }
 
   //Event Listeners
-  element.addEventListener('mousedown', eleMouseDown, false);
-  element.addEventListener('touchstart', eleMouseDown, false);
+  if(document.addEventListener) {
+    element.addEventListener('mousedown', eleMouseDown, false);
+    element.addEventListener('touchstart', eleMouseDown, false);
+  } else {
+    //fix for IE8-
+    element.attachEvent('onmousedown', eleMouseDown);
+    element.attachEvent('touchstart', eleMouseDown);
+  }
 
-  //Start
-  function eleMouseDown() {
+  //- Start
+  function eleMouseDown(ev) {
     dispatchEvent('start');
     removeClass(element, 'dragNdrop--stop');
     addClass(element, 'dragNdrop--start');
-    
+
+    // prevent text selection
+    if(ev.preventDefault) {
+      ev.preventDefault();
+    } else {
+      //the later is for IE8-
+      ev.returnValue = false;
+    }
+
+    var event;
+    if ('touches' in ev) { // slight adaptations for touches
+      event = ev.touches[0];
+    } else {
+      event = ev;
+    } // get first mouse position
+    // clientX/Y fallback for IE8-
+    prevPos = { x: event.pageX || event.clientX, y: event.pageY || event.clientY };
+
+    addEventListeners();
+  }
+
+  //- add event listeners
+  function addEventListeners() {
     //Add listeners
-    document.addEventListener('mousemove', eleMouseMove, false);
-    document.addEventListener('touchmove', eleMouseMove, false);
-    document.addEventListener('mouseup', eleMouseUp, false);
-    document.addEventListener('touchend', eleMouseUp, false);
+    if(document.addEventListener) {
+      document.addEventListener('mousemove', eleMouseMove, false);
+      document.addEventListener('touchmove', eleMouseMove, false);
+      document.addEventListener('mouseup', eleMouseUp, false);
+      document.addEventListener('touchend', eleMouseUp, false);
+    } else {
+      // support for IE8-
+      document.attachEvent('onmousemove', eleMouseMove);
+      document.attachEvent('touchmove', eleMouseMove);
+      document.attachEvent('onmouseup', eleMouseUp);
+      document.attachEvent('touchend', eleMouseUp);
+    }
   }
   
   //- Styles
+  if(!customStyles) setStyles(element);
   function setStyles(element) {
     var cursor, style = element.style;
-    style.position = 'absolute';
+    if(!transform) style.position = 'relative';
     style.zIndex = '999';
 
     if(constraints && constraints === 'x' || constraints === 'y') {
@@ -123,13 +202,16 @@ function dragNdrop(options) {
     removeClass(element, 'dragNdrop--start');
     addClass(element, 'dragNdrop--drag');
 
-    if(dropElements) prepareDrop(element, dropElements);
-    if(!customStyles) element.style.zIndex = '9999';
+    if(dropZones) prepareDrop(element, dropZones);
+    if(!customStyles && element.style.zIndex !== '9999' || document.body.style.cursor !== element.style.cursor) {
+      element.style.zIndex = '9999';
+      document.body.style.cursor = element.style.cursor;
+    }
 
     if ('touches' in ev) { // slight adaptations for touches
       ev.preventDefault();
       event = ev.touches[0];
-    } else { 
+    } else {
       event = ev;
     }
     getPositions(element, event, constraints);
@@ -137,41 +219,66 @@ function dragNdrop(options) {
   
   //- Get Positions
   function getPositions(element, event, constraints) {
-    var size = {
-      h: element.offsetHeight,
-      w: element.offsetWidth
+    var cusorPos = { // event.clientX/Y fallback for IE8-
+      x: event.pageX || event.clientX,
+      y: event.pageY || event.clientY
     };
-    
     var position = {
-      x: event.pageX - size.w / 2,
-      y: event.pageY - size.h / 2
+      x: cusorPos.x - prevPos.x,
+      y: cusorPos.y - prevPos.y
     };
+    prevPos = { x: cusorPos.x, y: cusorPos.y };
     
-    moveElement(element, position, constraints);
+    handleMoveElement(element, position, constraints);
   }
   
-  //- Move Element
-  function moveElement(element, position, constraints) {
+  //- Handle Move
+  function handleMoveElement(element, position, constraints) {
     if(constraints && constraints !== false) {
       handleConstraints(element, position, constraints);
     } else {
-      element.style.left = position.x + 'px';
-      element.style.top = position.y + 'px';
+      moveElement(element, {
+        x: elementPos.x + position.x,
+        y: elementPos.y + position.y
+      });
     }
   }
   
   //- Handle Constraints
   function handleConstraints(element, position, constraints) {
     if(constraints === 'x') {
-      element.style.left = position.x + 'px';
+      moveElement(element, {
+        x: elementPos.x + position.x,
+        y: elementPos.y // unchanged
+      });
 
     } else if(constraints === 'y') {
-      element.style.top = position.y + 'px';
+      moveElement(element, {
+        x: elementPos.x, // unchanged
+        y: elementPos.y + position.y
+      });
 
-    } else if(typeof constraints.innerHTML === "string") { //if constraints = DOM element
-      element.style.left = position.x + 'px';
-      element.style.top = position.y + 'px';
+    } else if(constraintElement) { //if constraints = DOM element
+      moveElement(element, {
+        x: elementPos.x + position.x,
+        y: elementPos.y + position.y
+      });
+
       isElementInside(element, constraints, false);
+    }
+  }
+
+  //- Move Element
+  function moveElement(element, newPosition) {
+    // set element position to the new position
+    elementPos = { x: newPosition.x, y: newPosition.y };
+    // update the view
+    if(transform) {
+      element.style.transform = 'translate3d(' + newPosition.x + 'px ,' + newPosition.y + 'px , 1px)';
+      element.style.webkitTransform = 'translate3d(' + newPosition.x + 'px ,' + newPosition.y + 'px , 1px)';
+    } else {
+      element.style.left = newPosition.x + 'px';
+      element.style.top = newPosition.y + 'px';
     }
   }
   
@@ -183,17 +290,22 @@ function dragNdrop(options) {
      * resized or moved on the fly. This also makes the function kinda context
      * independant.
      */
+    var scroll = {
+      // fallback for IE9-
+      x: window.scrollY || document.documentElement.scrollTop,
+      y: window.scrollX || document.documentElement.scrollLeft
+    };
     var containerRect = {
-      top: container.getBoundingClientRect().top + window.scrollY,
-      left: container.getBoundingClientRect().left + window.scrollX
+      top: container.getBoundingClientRect().top + scroll.y,
+      left: container.getBoundingClientRect().left + scroll.x
     };
     var containerSize = {
       top: container.offsetHeight,
       left: container.offsetWidth
     };
     var elementRect = {
-      top: element.getBoundingClientRect().top + window.scrollY,
-      left: element.getBoundingClientRect().left + window.scrollX
+      top: element.getBoundingClientRect().top + scroll.y,
+      left: element.getBoundingClientRect().left + scroll.x
     };
     var elementSize = {
       top: element.offsetHeight,
@@ -209,7 +321,8 @@ function dragNdrop(options) {
           inside.push(true);
         } else {
           inside.push(false);
-          if (!drop) element.style[rect[i]] = containerRect[rect[i]] + 'px';
+
+          if (!drop) putElementBack(element, rect[i], containerRect[rect[i]] - elementRect[rect[i]]);
         }
       } else { // bottom, right
         // position left + element size <= container position left + container size
@@ -217,15 +330,30 @@ function dragNdrop(options) {
           inside.push(true);
         } else {
           inside.push(false);
-          // element = container position left + container size - element size (to contain it, otherwise the element would be placed outside)
-          if (!drop) element.style[rect[i]] = containerRect[rect[i]] + containerSize[rect[i]] - elementSize[rect[i]] + 'px';
+          if (!drop) putElementBack(element, rect[i], (containerRect[rect[i]] + containerSize[rect[i]]) - (elementRect[rect[i]] + elementSize[rect[i]]));
         }
       }
     }
 
-    return inside.every(function(e) { return e === true; });
+    // check manually instead of using .every to support IE9-
+    return (inside[0] && inside[1] && inside[2] && inside[3]);
   }
-  
+
+  //- Put Element Back
+  function putElementBack(element, rect, difference) {
+    if(rect === 'top') {
+      moveElement(element, {
+        y: elementPos.y + difference,
+        x: elementPos.x
+      });
+    } else {
+      moveElement(element, {
+        y: elementPos.y,
+        x: elementPos.x + difference
+      });
+    }
+  }
+
   //- Stop
   function eleMouseUp() {
     dispatchEvent('stop');
@@ -233,64 +361,63 @@ function dragNdrop(options) {
     addClass(element, 'dragNdrop--stop');
 
     var dropped = false;
-    if(dropElements) dropped = handleDrop(element, dropElements);
-    if(callback) callback({element: element, dropped: dropped, dropElements: dropElements, constraints: constraints, customStyles: customStyles});
+    if(dropZones) dropped = handleDrop(element, dropZones);
+    if(callback) callback({element: element, dropped: dropped, dropZones: dropZones, constraints: constraints, customStyles: customStyles});
 
+    removeEventListeners();
+    if(!customStyles) document.body.style.cursor = 'inherit';
+  }
+
+  //- remove event listeners
+  function removeEventListeners() {
     //remove listeners
-    document.removeEventListener('mousemove', eleMouseMove, false);
-    document.removeEventListener('touchmove', eleMouseMove, false);
-    document.removeEventListener('mouseup', eleMouseUp, false);
-    document.removeEventListener('touchend', eleMouseUp, false);
+    if(document.addEventListener) {
+      document.removeEventListener('mousemove', eleMouseMove, false);
+      document.removeEventListener('touchmove', eleMouseMove, false);
+      document.removeEventListener('mouseup', eleMouseUp, false);
+      document.removeEventListener('touchend', eleMouseUp, false);
+    } else {
+      // support for IE8-
+      document.detachEvent('onmousemove', eleMouseMove);
+      document.detachEvent('touchmove', eleMouseMove);
+      document.detachEvent('onmouseup', eleMouseUp);
+      document.detachEvent('touchend', eleMouseUp);
+    }
   }
 
   //- prepare drop
-  function prepareDrop(element, dropElements) {
+  function prepareDrop(element, dropZones) {
     removeClass(element, 'dragNdrop--dropped');
     addClass(element, 'dragNdrop--dropable');
 
-    for (var i = 0; i < dropElements.length; i++) {
-      var dropElement = dropElements[i];
-      removeClass(dropElement, 'dragNdrop__drop--dropped');
-      addClass(dropElement, 'dragNdrop__drop--ready');
+    for (var i = 0; i < dropZones.length; i++) {
+      var dropElement = dropZones[i];
+      removeClass(dropElement, 'dragNdrop__dropzone--dropped');
+      addClass(dropElement, 'dragNdrop__dropzone--ready');
     }
   }
 
   //- handle drop
-  function handleDrop(element, dropElements) {
+  function handleDrop(element, dropZones) {
     removeClass(element, 'dragNdrop--dropable');
     removeClass(element, 'dragNdrop--dropped');
 
     var dropped = [];
-    for (var i = 0; i < dropElements.length; i++) {
-      var dropElement = dropElements[i];
-      removeClass(dropElement, 'dragNdrop__drop--ready');
+    for (var i = 0; i < dropZones.length; i++) {
+      var dropZone = dropZones[i];
+      removeClass(dropZone, 'dragNdrop__dropzone--ready');
+      removeClass(dropZone, 'dragNdrop__dropzone--dropped');
 
-      if(isElementInside(element, dropElement, true)) {
+      if(isElementInside(element, dropZone, true)) {
         dispatchEvent('dropped');
         addClass(element, 'dragNdrop--dropped');
-        addClass(dropElement, 'dragNdrop__drop--dropped');
-        dropped.push(dropElement);
-      } else {
-        removeClass(dropElement, 'dragNdrop__drop--dropped');
-        dropped.push(false);
+        addClass(dropZone, 'dragNdrop__dropzone--dropped');
+        dropped.push(dropZone);
       }
     }
 
-    var droppedContainer = [];
-    function isDropped(element) {
-      if(element) {
-        droppedContainer.push(element);
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    if(dropped.some(isDropped)) {
-      return droppedContainer;
-    } else {
-      return false;
-    }
+    // check manually instead of using .some to support IE9-
+    return (dropped.length > 0) ? dropped : false;
   }
 
   /**
@@ -298,13 +425,17 @@ function dragNdrop(options) {
    */
   function dispatchEvent(name) {
     var eventing;
-    if(IE) {
-      eventing = document.createEvent('dragNdrop:' + name);
-      eventing.initEvent('dragNdrop:' + name, true, true);
-    } else {
+    if(typeof Event === 'function') {
       eventing = new Event('dragNdrop:' + name);
+      element.dispatchEvent(eventing);
+    } else {
+      //fallback for IE9 is document.createEvent. But for IE8 and below that does not work either.
+      if(document.createEvent) {
+        eventing = document.createEvent('CustomEvent');
+        eventing.initEvent('dragNdrop:' + name, true, true);
+        element.dispatchEvent(eventing);
+      }
     }
-    element.dispatchEvent(eventing);
   }
 
   function hasClass(el, className) {
@@ -316,20 +447,27 @@ function dragNdrop(options) {
   }
 
   function addClass(el, className) {
-    if (el.classList) {
-      el.classList.add(className);
-    } else if (!hasClass(el, className)) {
-      el.className += " " + className;
+    if(!hasClass(el, className)) {
+
+      if (el.classList) {
+        el.classList.add(className);
+      } else {
+        el.className += " " + className;
+      }
+
     }
   }
 
   function removeClass(el, className) {
-    if (el.classList) {
-      el.classList.remove(className);
-    } else if (hasClass(el, className)) {
-      var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-      el.className=el.className.replace(reg, ' ');
+    if(hasClass(el, className)) {
+
+      if (el.classList) {
+        el.classList.remove(className);
+      } else {
+        var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+        el.className=el.className.replace(reg, ' ');
+      }
+
     }
   }
-
 }
