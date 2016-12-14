@@ -9,7 +9,7 @@
 
 #dragNdrop
 
-easily add drag & drop functionality to dom nodes
+easily add drag and drop functionality to your dom nodes elements
 
 ##Project Page: Demo & Info
 
@@ -23,6 +23,7 @@ easily add drag & drop functionality to dom nodes
 - Awesome browser support, works even on IE8
 - Ease of use
 - Lightweight, only 1KB gzipped
+- Performance: dragNdrop uses hardware accelerated css by default which makes it hyper fast 
 - Free & open source under MIT License
 
 ##Why?
@@ -93,6 +94,7 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |--- |--- |--- |
 |element |single DOM element (node) |the element that will be draggable |
 |customStyles |false / true (boolean) |when set to true, the styles you give the element will overwrite those from the plugin |
+|useTransform |true / false (boolean) |use hardware accelerated css (translate3d) or not (default: true) |
 |constraints |false / 'x' / 'y' / single DOM element (boolean/ string/ node) |constrain the element: 'x' = element can only be dragged on the x axis. 'y' = element can only be dragged on the y axis. DOM element = element can only be dragged within that container |
 |dropZones |false / array of DOM element(s) (node(s)) |one or more drop-elements (where the element can be dropped into) |
 |callback |function |a callback function (taking an event object) that gets fired when the element is dropped |

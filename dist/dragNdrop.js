@@ -1,6 +1,6 @@
 /* 
 
-v1.1.6
+v1.1.7
      _                     __    _                 
   __| |_ __ __ _  __ _  /\ \ \__| |_ __ ___  _ __  
  / _` | '__/ _` |/ _` |/  \/ / _` | '__/ _ \| '_ \ 
@@ -48,7 +48,7 @@ v1.1.6
 
  ** @element        node              single DOM element                          (Mandatory!) default: NaN
  ** @customStyles   boolean           false / true                                (optional) default: false
- ** @transform      boolean           true / false                                (optional) default: true
+ ** @useTransform   boolean           true / false                                (optional) default: true
  ** @constraints    string or node    false / 'x' / 'y' / single DOM element      (optional) default: false
  ** @dropZones      nodes             false / array of DOM elements               (optional) default: false
  ** @callback       function          function that gets fired when dropped       (optional) default: function(){}
@@ -101,7 +101,7 @@ var dragNdrop = function(options) {
   var constraints = options.constraints;
   var dropZones = options.dropZones;
   var callback = options.callback;
-  var transform = ('transform' in options) ? options.transform : true;
+  var useTransform = ('useTransform' in options) ? options.useTransform : true;
 
   var elementPos = {};
   var prevPos = { x: 0, y: 0 };
@@ -115,7 +115,7 @@ var dragNdrop = function(options) {
     console.log('WARNING: dragNdrop: a browser older than IE 10 detected! ', ' (use top/left position instead of transform, attachEvent instead of addEventListener and initEvent instead of new Event constructor)');
     console.log('WARNING: dragNdrop: the tool will probably work but please do yourself a favor and update your browser');
     //internet explorer <9 does not support transform3d
-    transform = false;
+    useTransform = false;
   }
 
   //add startup classes
@@ -133,7 +133,7 @@ var dragNdrop = function(options) {
     if(customStyles) {
       setCustomStyles(element);
     } else {
-      element.style.position = (!transform) ? 'relative' : 'auto';
+      element.style.position = (!useTransform) ? 'relative' : 'auto';
       element.style.zIndex = '999';
       if(constraints && constraints === 'x' || constraints === 'y') {
         element.style.cursor = constraints === 'x' ? 'col-resize' : 'row-resize';
@@ -149,7 +149,7 @@ var dragNdrop = function(options) {
     if(tempPos && tempPos !== 'static') {
       element.style.position = tempPos;
     } else {
-      element.style.position = (!transform) ? 'relative' : 'auto';
+      element.style.position = (!useTransform) ? 'relative' : 'auto';
     }
     //zIndex
     var tempZindex = getStyle(element, 'zIndex');
@@ -214,7 +214,7 @@ var dragNdrop = function(options) {
     };
 
     //get first element position
-    if(transform) {
+    if(useTransform) {
       // translate3d = 'XXpx, YYpx, 1px);'
       var translate3d = element.style.transform.split('translate3d(')[1];
       // results = ['XXpx', 'YYpx', '1px);'];
@@ -325,7 +325,7 @@ var dragNdrop = function(options) {
     // set element position to the new position
     elementPos = { x: newPosition.x, y: newPosition.y };
     // update the view
-    if(transform) {
+    if(useTransform) {
       element.style.transform = 'translate3d(' + newPosition.x + 'px ,' + newPosition.y + 'px , 1px)';
       element.style.webkitTransform = 'translate3d(' + newPosition.x + 'px ,' + newPosition.y + 'px , 1px)';
     } else {
@@ -419,7 +419,7 @@ var dragNdrop = function(options) {
 
     var dropped = false;
     if(dropZones) dropped = handleDrop(element, dropZones);
-    if(callback) callback({element: element, dropped: dropped, dropZones: dropZones, constraints: constraints, customStyles: customStyles});
+    if(callback) callback({element: element, dropped: dropped, dropZones: dropZones, constraints: constraints, customStyles: customStyles, useTransform: useTransform});
 
     removeEventListeners();
 
