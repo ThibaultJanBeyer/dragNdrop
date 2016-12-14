@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>dragNdrop</title>
+  <link rel="stylesheet" href="example.css">
+  <script src="dragNdrop.js"></script>
+  <style>
+    .elements {
+    background: black;
+    color: white;
+    height: 100px;
+    width: 100px;
+  }
+
+  #container {
+    background: lightblue;
+    height: 200px;
+    width: 200px;
+    margin-top: 200px;
+    position: absolute;
+    z-index: -1;
+  }
+
+  #drop {
+    background: blueviolet;
+    height: 200px;
+    margin: 50px;
+    width: 200px;
+  }
+
+  #drop2 {
+    background: darkorange;
+    height: 200px;
+    margin: 50px;
+    width: 200px;
+  }
+
+  .dragNdrop::before {
+    content: 'I am draggable';
+    display: block;
+  }
+
+  .dragNdrop--dropzone::before {
+    content: 'I am a dropzone';
+  }
+
+  .dragNdrop--start::before {
+    content: 'Start';
+    display: block;
+  }
+
+  .dragNdrop--drag::before {
+    content: 'Drag';
+    display: block;
+  }
+
+  .dragNdrop--stop::before {
+    content: 'Stop';
+    display: block;
+  }
+
+  .dragNdrop--dropped::after {
+    content: 'I was dropped into container';
+    display: block;
+  }
+
+  .dragNdrop--dropable::after {
+    content: 'I can be dropped into container';
+    display: block;
+  }
+
+  .dragNdrop__dropzone--ready::after {
+    content: 'drop me here!';
+    display: block;
+  }
+
+  .dragNdrop__dropzone--dropped::after {
+    content: 'dropped inside container';
+    display: block;
+  }
+  </style>
+</head>
+<body>
+<div id="element2" class="elements"></div>
+<div id="element" class="elements"></div>
+<div id="drop"></div>
+<div id="drop2"></div>
+<div id="container"></div>
+
+<script>
+  dragNdrop({
+    // element to be dragged (DOM element)
+    element: document.getElementById('element'),
+    // custom styles (false / true)
+    customStyles: false,
+    // constraints (false / 'x' / 'y' / DOM element)
+    constraints: false,
+    // drop (false / DOM element)
+    dropZones: [
+      document.getElementById('drop'),
+      document.getElementById('drop2')
+    ],
+    // callback
+    callback: function(event) {
+      console.log(event);
+    }
+  });
+  dragNdrop({
+    element: document.getElementById('element2'),
+    constraints: document.getElementById('container')
+  });
+</script>
+</body>
+</html>

@@ -5,8 +5,6 @@ var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var htmlhint = require('gulp-htmlhint');
 var htmlmin = require('gulp-htmlmin');
-var scsslint = require('gulp-scss-lint');
-var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var csso = require('gulp-csso');
 var ghPages = require('gulp-gh-pages');
@@ -23,7 +21,6 @@ gulp.task('js', function () {
 
 gulp.task('css', function () {
   gulp.src('./src/example.css')
-    .pipe(scsslint())
     .pipe(autoprefixer())
     .pipe(csso())
     .pipe(gulp.dest('./dist/'));

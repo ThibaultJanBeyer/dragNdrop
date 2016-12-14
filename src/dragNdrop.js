@@ -1,6 +1,6 @@
 /* 
 
-v1.1.3
+v1.1.4
      _                     __    _                 
   __| |_ __ __ _  __ _  /\ \ \__| |_ __ ___  _ __  
  / _` | '__/ _` |/ _` |/  \/ / _` | '__/ _ \| '_ \ 
@@ -192,36 +192,39 @@ function dragNdrop(options) {
     addClass(element, 'dragNdrop--start');
 
     // prevent text selection
-    if(ev.preventDefault) {
-      ev.preventDefault();
-    } else {
-      //the later is for IE8-
-      ev.returnValue = false;
-    }
+    var event = ('touches' in ev) ? ev.touches[0] : ev;
+    if(event.preventDefault) { event.preventDefault(); } else { event.returnValue = false; } //the later is for IE8-
+
+    getStartingPositions(element, event);
 
     //style changes
     element.style.zIndex = parseInt(element.style.zIndex) + 1;
     var docStyles = document.body.style;
     docStyles.cursor = (docStyles.cursor && docStyles.cursor !== 'inherit') ? docStyles.cursor : element.style.cursor;
 
-    //positions
-    var event;
-    if ('touches' in ev) { // slight adaptations for touches
-      event = ev.touches[0];
-    } else {
-      event = ev;
-    } // get first mouse position
-    // clientX/Y fallback for IE8-
+    addEventListeners();
+  }
+
+  function getStartingPositions(element, event) {
+    //get first mouse position
     prevPos = {
+      //clientX/Y fallback for IE8-
       x: event.pageX || event.clientX,
       y: event.pageY || event.clientY
     };
-    elementPos = {
-      x: parseInt(getStyle(element, 'left')) || 0,
-      y: parseInt(getStyle(element, 'top')) || 0
-    };
 
-    addEventListeners();
+    //get first element position
+    if(transform) {
+      // translate3d = 'XXpx, YYpx, 1px);'
+      var translate3d = element.style.transform.split('translate3d(')[1];
+      // results = ['XXpx', 'YYpx', '1px);'];
+      var results = (translate3d) ? translate3d.split(',') : false;
+      elementPos.x = parseInt(results[0]) || 0;
+      elementPos.y = parseInt(results[1]) || 0;
+    } else {
+      elementPos.x = parseInt(getStyle(element, 'left')) || 0;
+      elementPos.y = parseInt(getStyle(element, 'top')) || 0;
+    }
   }
 
 
