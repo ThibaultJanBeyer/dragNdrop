@@ -1,6 +1,6 @@
 /* 
 
-v1.1.4
+v1.1.6
      _                     __    _                 
   __| |_ __ __ _  __ _  /\ \ \__| |_ __ ___  _ __  
  / _` | '__/ _` |/ _` |/  \/ / _` | '__/ _ \| '_ \ 
@@ -87,7 +87,7 @@ v1.1.4
 
  */
 
-function dragNdrop(options) {
+var dragNdrop = function(options) {
   //Errors
   if(!options) {
     console.log('ERROR: dragNdrop: please provide an options object to the function. See reference at: https://github.com/ThibaultJanBeyer/dragNdrop for more info');
@@ -543,8 +543,11 @@ function dragNdrop(options) {
       return el.style[prop];
     }
   }
-}
-
-module.exports = exports = function(opt) {
-  dragNdrop(opt);
 };
+
+// make exportable
+if (typeof module !== "undefined" && module !== null) {
+  module.exports = dragNdrop;
+} else {
+  window.dragNdrop = dragNdrop;
+}
