@@ -544,3 +544,7 @@ function dragNdrop(options) {
     }
   }
 }
+
+module.exports = exports = function(opt) {
+  dragNdrop(opt);
+};
