@@ -73,7 +73,7 @@ dragNdrop({
   element: document.getElementById('element1'), // (optional, default: '#dragNdrop-element')
   // custom styles (false / true)
   customStyles: false, // (optional, default: false)
-  // custom styles (true / false)
+  // custom styles (true / false) (if true, element styles overwrite plugin styles)
   useTransform: true, // (optional, default: true)
   // constraints (false / 'x' / 'y' / DOM element)
   constraints: false, // (optional, default: false)
@@ -92,7 +92,7 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 | property | type | usage |
 |--- |--- |--- |
 |element |single DOM element (node) |the element that will be draggable |
-|customStyles |false / true (boolean) |when set to true, no styles will be added by the plugin |
+|customStyles |false / true (boolean) |when set to true, the styles you give the element will overwrite those from the plugin |
 |constraints |false / 'x' / 'y' / single DOM element (boolean/ string/ node) |constrain the element: 'x' = element can only be dragged on the x axis. 'y' = element can only be dragged on the y axis. DOM element = element can only be dragged within that container |
 |dropZones |false / array of DOM element(s) (node(s)) |one or more drop-elements (where the element can be dropped into) |
 |callback |function |a callback function (taking an event object) that gets fired when the element is dropped |
