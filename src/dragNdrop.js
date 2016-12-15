@@ -1,6 +1,6 @@
 /* 
 
-v1.1.7
+v1.1.8
      _                     __    _                 
   __| |_ __ __ _  __ _  /\ \ \__| |_ __ ___  _ __  
  / _` | '__/ _` |/ _` |/  \/ / _` | '__/ _ \| '_ \ 
@@ -18,6 +18,7 @@ v1.1.7
  - Awesome browser support, works even on IE8
  - Ease of use
  - Lightweight, only 1KB gzipped
+ - Performance: dragNdrop uses hardware accelerated css by default which makes it hyper fast. Old Browsers? Don’t worry: it gracefully falls back to normal position manipulation if the browser does not support hardware accelerated css
  - Free & open source under MIT License
 
 
@@ -107,14 +108,9 @@ var dragNdrop = function(options) {
   var prevPos = { x: 0, y: 0 };
   var constraintElement = constraints && typeof constraints.innerHTML === "string"; //if constraints = DOM element
 
-  //check for old internet explorer versions
-  var div = document.createElement('div');
-  div.innerHTML = '<!--[if lt IE 9]><i id="ie-version-below-nine"></i><![endif]--><!--[if IE 9]><i id="ie-version-nine"></i><![endif]-->';
-  var isIeLessThan10 = (div.getElementsByTagName('i').length == 1);
-  if (isIeLessThan10) {
-    console.log('WARNING: dragNdrop: a browser older than IE 10 detected! ', ' (use top/left position instead of transform, attachEvent instead of addEventListener and initEvent instead of new Event constructor)');
-    console.log('WARNING: dragNdrop: the tool will probably work but please do yourself a favor and update your browser');
-    //internet explorer <9 does not support transform3d
+  //check if browser supports hardware accelerated css
+  if(!has3d()) {
+    console.log('WARNING: dragNdrop: your browser does not support hardware accelerated css. The plugin will still work but do yourself a favor and update your browser.');
     useTransform = false;
   }
 
@@ -542,6 +538,35 @@ var dragNdrop = function(options) {
     } else {
       return el.style[prop];
     }
+  }
+
+  //checks if browser supports hardware accelerated css. As seen here: http://stackoverflow.com/a/12621264/3712591
+  function has3d() {
+    if (!window.getComputedStyle) {
+      return false;
+    }
+
+    var el = document.createElement('p'),
+      has3d,
+      //see http://caniuse.com/#search=translate3d
+      transforms = {
+        'webkitTransform':'-webkit-transform',
+        'transform':'transform'
+      };
+
+    //Add it to the body to get the computed style.
+    document.body.insertBefore(el, null);
+
+    for (var t in transforms) {
+      if (el.style[t] !== undefined) {
+        el.style[t] = "translate3d(1px,1px,1px)";
+        has3d = window.getComputedStyle(el).getPropertyValue(transforms[t]);
+      }
+    }
+
+    document.body.removeChild(el);
+
+    return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
   }
 };
 
