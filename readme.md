@@ -20,7 +20,7 @@ easily add drag and drop functionality to your dom nodes elements
 - Add draggability to any DOM element
 - Add corresponding drop containers
 - Callback, Classes and Events available
-- Awesome browser support, works even on IE8
+- Awesome browser support, works even on IE5
 - Ease of use
 - Lightweight, only 1KB gzipped
 - Performance: dragNdrop uses hardware accelerated css by default which makes it hyper fast 
