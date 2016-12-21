@@ -23,7 +23,7 @@ easily add drag and drop functionality to your dom nodes elements
 - Awesome browser support, works even on IE5
 - Ease of use
 - Lightweight, only 1KB gzipped
-- Performance: dragNdrop uses hardware accelerated css by default which makes it hyper fast 
+- Performance: dragNdrop uses hardware accelerated css by default which makes it hyper fast. (gracefully falls back to normal position manipulation if browser doesn’t support it)
 - Free & open source under MIT License
 
 ##Why?
