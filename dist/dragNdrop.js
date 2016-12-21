@@ -1,6 +1,6 @@
 /* 
 
-v1.1.8
+v1.1.9
      _                     __    _                 
   __| |_ __ __ _  __ _  /\ \ \__| |_ __ ___  _ __  
  / _` | '__/ _` |/ _` |/  \/ / _` | '__/ _ \| '_ \ 
@@ -47,12 +47,12 @@ v1.1.8
 
  Properties
 
- ** @element        node              single DOM element                          (Mandatory!) default: NaN
- ** @customStyles   boolean           false / true                                (optional) default: false
- ** @useTransform   boolean           true / false                                (optional) default: true
- ** @constraints    string or node    false / 'x' / 'y' / single DOM element      (optional) default: false
- ** @dropZones      nodes             false / array of DOM elements               (optional) default: false
- ** @callback       function          function that gets fired when dropped       (optional) default: function(){}
+ ** @element        node            single DOM element                              (Mandatory!) default: NaN
+ ** @customStyles   boolean         false / true                                    (optional) default: false
+ ** @useTransform   boolean         true / false                                    (optional) default: true
+ ** @constraints    string or node  false / 'x' / 'y' / single DOM element          (optional) default: false
+ ** @dropZones      nodes           false / array of DOM elements / css selector(s) (optional) default: false
+ ** @callback       function        function that gets fired when dropped           (optional) default: function(){}
 
  ***     @callback function can obtains an event object with following keys/values:
  ****        @element,
@@ -100,7 +100,7 @@ var dragNdrop = function(options) {
   var element = options.element;
   var customStyles = options.customStyles;
   var constraints = options.constraints;
-  var dropZones = options.dropZones;
+  var dropZones = setupDropZones(options.dropZones);
   var callback = options.callback;
   var useTransform = ('useTransform' in options) ? options.useTransform : true;
 
@@ -114,11 +114,51 @@ var dragNdrop = function(options) {
     useTransform = false;
   }
 
-  //add startup classes
-  addClass(element, 'dragNdrop');
-  if(dropZones) {
-    for(var i = 0, il = dropZones.length; i < il; i++) {
-      addClass(dropZones[i], 'dragNdrop__dropzone');
+  //- Setup dropZones
+  function setupDropZones(dropZones) {
+    if (dropZones) {
+      var _dropZones = getDropZones(dropZones);
+      setupClasses(_dropZones);
+      return _dropZones;
+    } else {
+      return false;
+    }
+  }
+
+  function getDropZones(dropZones){
+    var _dropZones = [];
+    if(dropZones instanceof Array) {
+      for (var i = 0, il = dropZones.length; i < il; i++) {
+        _dropZones = _dropZones.concat(getElement(dropZones[i]));
+      }
+    } else {
+      _dropZones = _dropZones.concat(getElement(dropZones));
+    }
+    return _dropZones;
+  }
+
+  function getElement(selector) {
+    // if selector is a specific DOM element
+    if (typeof selector.innerHTML === 'string') {
+      return [selector];
+    // if selector is a string, thus a css selector
+    } else if(typeof selector === 'string') {
+      var elements = document.querySelectorAll(selector);
+      // since the querySelector returns a nodelist but we want a normal array of DOM nodes,
+      // we have to extract the nodes from the nodelist and save them in an array
+      var extractNodelist = [];
+      for (var i = 0, il = elements.length; i < il; i++) {
+        extractNodelist.push(elements[i]);
+      }
+      return extractNodelist;
+    }
+  }
+
+  //- Setup Classes
+  function setupClasses(_dropZones) {
+    addClass(element, 'dragNdrop');
+    for(var i = 0, il = _dropZones.length; i < il; i++) {
+      addClass(_dropZones[i], 'dragNdrop__dropzone');
     }
   }
 
@@ -568,6 +608,37 @@ var dragNdrop = function(options) {
 
     return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
   }
+
+  // querySelector polyfill
+  function querySelectorPolyfill() {
+    if (!document.querySelectorAll) {
+      document.querySelectorAll = function (selectors) {
+        var style = document.createElement('style'), elements = [], element;
+        document.documentElement.firstChild.appendChild(style);
+        document._qsa = [];
+
+        style.styleSheet.cssText = selectors + '{x-qsa:expression(document._qsa && document._qsa.push(this))}';
+        window.scrollBy(0, 0);
+        style.parentNode.removeChild(style);
+
+        while (document._qsa.length) {
+          element = document._qsa.shift();
+          element.style.removeAttribute('x-qsa');
+          elements.push(element);
+        }
+        document._qsa = null;
+        return elements;
+      };
+    }
+
+    if (!document.querySelector) {
+      document.querySelector = function (selectors) {
+        var elements = document.querySelectorAll(selectors);
+        return (elements.length) ? elements[0] : null;
+      };
+    }
+  }
+  querySelectorPolyfill();
 };
 
 // make exportable

@@ -70,20 +70,28 @@ dragNdrop({
 **complete**
 ```javascript
 dragNdrop({
-  // element to be dragged (DOM element)
-  element: document.getElementById('element1'), // (optional, default: '#dragNdrop-element')
-  // custom styles (false / true)
-  customStyles: false, // (optional, default: false)
-  // custom styles (true / false) (if true, element styles overwrite plugin styles)
-  useTransform: true, // (optional, default: true)
-  // constraints (false / 'x' / 'y' / DOM element)
-  constraints: false, // (optional, default: false)
-  // drop (false / DOM element)
-  dropZones: [ document.getElementById('dropContainer1') ], // (optional, default: '#dragNdrop-dropZone')
+
+  // element to be dragged (single DOM element) // (optional, default: '#dragNdrop-element')
+  element: document.getElementById('element1'),
+
+  // custom styles (false / true) // (optional, default: false)
+  customStyles: false,
+
+  // custom styles (true / false) (if true, element styles overwrite plugin styles) // (optional, default: true)
+  useTransform: true,
+
+  // constraints (false / 'x' / 'y' / DOM element) // (optional, default: false)
+  constraints: false,
+
+  // drop (false / DOM element) // (optional, default: false)
+  dropZones: [ document.getElementById('dropContainer1'), '.myClass' ],
+  // also valid = dropZones: '.myClass'
+
   // callback(event){}
   callback: function(event) { // (optional)
     // event.element, event.dropped, event.dropZones, event.constraints, event.customStyles
   }
+
 });
 ```
 Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for more examples.
@@ -96,7 +104,7 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |customStyles |false / true (boolean) |when set to true, the styles you give the element will overwrite those from the plugin |
 |useTransform |true / false (boolean) |use hardware accelerated css (translate3d) or not (default: true) |
 |constraints |false / 'x' / 'y' / single DOM element (boolean/ string/ node) |constrain the element: 'x' = element can only be dragged on the x axis. 'y' = element can only be dragged on the y axis. DOM element = element can only be dragged within that container |
-|dropZones |false / array of DOM element(s) (node(s)) |one or more drop-elements (where the element can be dropped into) |
+|dropZones |false / array of DOM element(s) or CSS selector(s) (node(s)/selector(s)) |one or more drop-elements (where the element can be dropped into) |
 |callback |function |a callback function (taking an event object) that gets fired when the element is dropped |
 
 ##Callback Event Object:
@@ -106,7 +114,7 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |dropped |false = element was not dropped into a drop-container. [node] = array of dom elements = drop-containers in which the element was dropped |
 |customStyles |false / true |
 |constraints |false / 'x' / 'y' / single DOM element |
-|dropZones |one or more drop-elements (where the element can be dropped into) |
+|dropZones |As array of DOM elements containing all drop-zones where the element can be dropped into |
 
 ##Events
 | name | trigger |

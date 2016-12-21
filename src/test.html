@@ -24,16 +24,21 @@
 
   #drop {
     background: blueviolet;
-    height: 200px;
-    margin: 50px;
-    width: 200px;
   }
 
   #drop2 {
     background: darkorange;
+  }
+
+  .drops {
     height: 200px;
     margin: 50px;
     width: 200px;
+    display: block;
+  }
+
+  .drop3 {
+    background: hotpink;
   }
 
   .dragNdrop::before {
@@ -70,6 +75,10 @@
     display: block;
   }
 
+  .dragNdrop__dropzone--ready {
+    border: 1px solid red;
+  }
+
   .dragNdrop__dropzone--ready::after {
     content: 'drop me here!';
     display: block;
@@ -84,8 +93,14 @@
 <body>
 <div id="element2" class="elements"></div>
 <div id="element" class="elements"></div>
-<div id="drop"></div>
-<div id="drop2"></div>
+<i class="drops">Testo</i>
+<input type="text" class="drops">
+<input type="button" value="just a fake button">
+<div id="drop" class="drops"></div>
+<div id="drop2" class="drops"></div>
+<div class="drops drop3"></div>
+<div class="drops drop3"></div>
+<div class="drops drop3"></div>
 <div id="container"></div>
 
 <script>
@@ -99,7 +114,10 @@
     // drop (false / DOM element)
     dropZones: [
       document.getElementById('drop'),
-      document.getElementById('drop2')
+      '#drop2',
+      '.drop3',
+      'i',
+      'input[type=text]'
     ],
     // callback
     callback: function(event) {
