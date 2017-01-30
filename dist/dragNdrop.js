@@ -106,7 +106,7 @@ var dragNdrop = function(options) {
 
   var elementPos = {};
   var prevPos = { x: 0, y: 0 };
-  var constraintElement = constraints && typeof constraints.innerHTML === "string"; //if constraints = DOM element
+  var constraintElement = constraints && typeof constraints.innerHTML === 'string'; //if constraints = DOM element
 
   //check if browser supports hardware accelerated css
   if(!has3d()) {
@@ -593,7 +593,7 @@ var dragNdrop = function(options) {
       if (el.classList) {
         el.classList.add(className);
       } else {
-        el.className += " " + className;
+        el.className += ' ' + className;
       }
     }
   }
@@ -641,14 +641,14 @@ var dragNdrop = function(options) {
 
     for (var t in transforms) {
       if (el.style[t] !== undefined) {
-        el.style[t] = "translate3d(1px,1px,1px)";
+        el.style[t] = 'translate3d(1px, 1px, 1px)';
         _has3d = window.getComputedStyle(el).getPropertyValue(transforms[t]);
       }
     }
 
     document.body.removeChild(el);
 
-    return (_has3d !== undefined && _has3d.length > 0 && _has3d !== "none");
+    return (_has3d !== undefined && _has3d.length > 0 && _has3d !== 'none');
   }
 
   // querySelector polyfill
@@ -714,7 +714,7 @@ var dragNdrop = function(options) {
 };
 
 // make exportable
-if (typeof module !== "undefined" && module !== null) {
+if (typeof module !== 'undefined' && module !== null) {
   module.exports = dragNdrop;
 } else {
   window.dragNdrop = dragNdrop;
