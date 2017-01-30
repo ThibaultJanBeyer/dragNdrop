@@ -1,6 +1,6 @@
 {
   "name": "npm-dragndrop",
-  "version": "1.1.10",
+  "version": "1.2.0",
   "description": "easily add drag and drop functionality to your project",
   "main": "./dist/dNd.min.js",
   "dependencies": {},
