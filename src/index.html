@@ -60,7 +60,7 @@
 
   <div class="typewriter"><img src="typewriter.gif" alt="animated typewriter gif" id="typewriter"></div>
   <h3>Documentation</h3>
-  <div class="doc-navigation sticky">
+  <nav class="doc-navigation sticky">
     <ul>
       <li>
         <a href="#one">1. Installation</a>
@@ -74,7 +74,10 @@
           <a href="#twoc">2c. Usage with dropZones</a>
         </li>
         <li>
-          <a href="#twod">2c. Usage with callback function</a>
+          <a href="#twod">2d. Usage with callback function</a>
+        </li>
+        <li>
+          <a href="#twoe">2e. start(), pause() and stop()</a>
         </li>
       </li>
       <li>
@@ -87,7 +90,7 @@
         <a href="#five">5. Classes</a>
       </li>
     </ul>
-  </div>
+  </nav>
 
 
   <h4 id="one">1. Installation</h4>
@@ -124,14 +127,25 @@
   <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
 
-  <h4 id="twoc">2b. Usage with dropZones</h4>
+  <h4 id="twoc">2c. Usage with dropZones</h4>
   <p data-height="431" data-theme-id="light" data-slug-hash="pNOWeq" data-default-tab="js,result" data-user="ThibaultJanBeyer" data-embed-version="2" data-pen-title="dragNdrop with dropElements example" class="codepen">See the Pen <a href="http://codepen.io/ThibaultJanBeyer/debug/pNOWeq/">dragNdrop with dropElements example</a> by Thibault Jan Beyer (<a href="http://codepen.io/ThibaultJanBeyer">@ThibaultJanBeyer</a>) on <a href="http://codepen.io">CodePen</a>.</p>
   <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
 
-  <h4 id="twod">2b. Usage with callback function</h4>
+  <h4 id="twod">2d. Usage with callback function</h4>
   <p data-height="470" data-theme-id="light" data-slug-hash="oYPGdB" data-default-tab="js,result" data-user="ThibaultJanBeyer" data-embed-version="2" data-pen-title="dragNdrop with callback example" class="codepen">See the Pen <a href="http://codepen.io/ThibaultJanBeyer/debug/oYPGdB/">dragNdrop with callback example</a> by Thibault Jan Beyer (<a href="http://codepen.io/ThibaultJanBeyer">@ThibaultJanBeyer</a>) on <a href="http://codepen.io">CodePen</a>.</p>
   <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+
+
+  <h4 id="twoe">2e. start(), pause() and stop()</h4>
+  <strong>If you add the function to a variable you get full controll over all its functions:</strong>
+  <pre><xmp class="prettyprint lang-js" contenteditable="true"
+>var dnd = dragNdrop({ element: document.getElementById('element') });
+
+// you can now use start(), pause(), stop(), etc. like so:
+dnd.pause()  // will stop the current dragging process
+dnd.stop();  // will teardown/stop the whole functionality
+dnd.start();  // reset the functionality after a teardown</xmp></pre>
 
 
 

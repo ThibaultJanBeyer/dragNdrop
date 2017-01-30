@@ -28,7 +28,7 @@ easily add drag and drop functionality to your dom nodes elements
 
 ##Why?
 
-Because there was nothing this small that does not require jquery out there.
+Because there was nothing this fast that does not require jquery out there.
 
 
 ##1. Installation
@@ -69,7 +69,7 @@ dragNdrop({
 ```
 **complete**
 ```javascript
-dragNdrop({
+var dnd = dragNdrop({
 
   // element to be dragged (single DOM element) // (optional, default: '#dragNdrop-element')
   element: document.getElementById('element1'),
@@ -93,6 +93,12 @@ dragNdrop({
   }
 
 });
+
+// if you add the function to a variable like we did, you have access to all its functions
+// and can now use start(), pause() and stop() like so:
+dnd.pause();  // will stop the dragging process
+dnd.stop();  // will teardown/stop the whole functionality
+dnd.start();  // reset the functionality after a teardown
 ```
 Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for more examples.
 
