@@ -104,7 +104,7 @@
 <div id="container"></div>
 
 <script>
-  dragNdrop({
+  var dnd = dragNdrop({
     // element to be dragged (DOM element)
     element: document.getElementById('element'),
     // custom styles (false / true)
@@ -128,6 +128,11 @@
     element: document.getElementById('element2'),
     constraints: document.getElementById('container')
   });
+
+  setTimeout(function() {
+    console.log('hi', dnd)
+    dnd.pause();
+  }, 1000);
 </script>
 </body>
 </html>

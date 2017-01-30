@@ -154,17 +154,26 @@ var dragNdrop = function(options) {
     }
   }
 
+  //- Start
+  function start() {
+    setupEventListeners(element);
+    setStyles(element);
+    setupClasses();
+  }
+  start();
+
   //- Setup Classes
   function setupClasses(_dropZones) {
     addClass(element, 'dragNdrop');
-    for(var i = 0, il = _dropZones.length; i < il; i++) {
-      addClass(_dropZones[i], 'dragNdrop__dropzone');
+    if(_dropZones) {
+      for(var i = 0, il = _dropZones.length; i < il; i++) {
+        addClass(_dropZones[i], 'dragNdrop__dropzone');
+      }
     }
   }
 
 
   //- Styles
-  setStyles(element);
   function setStyles(element) {
     if(customStyles) {
       setCustomStyles(element);
@@ -211,17 +220,19 @@ var dragNdrop = function(options) {
 
 
   //- Event Listeners
-  if(document.addEventListener) {
-    element.addEventListener('mousedown', eleMouseDown, false);
-    element.addEventListener('touchstart', eleMouseDown, false);
-  } else {
-    //fix for IE8-
-    element.attachEvent('onmousedown', eleMouseDown);
-    element.attachEvent('touchstart', eleMouseDown);
+  function setupEventListeners(element) {
+    if(document.addEventListener) {
+      element.addEventListener('mousedown', eleMouseDown, false);
+      element.addEventListener('touchstart', eleMouseDown, false);
+    } else {
+      //fix for IE8-
+      element.attachEvent('onmousedown', eleMouseDown);
+      element.attachEvent('touchstart', eleMouseDown);
+    }
   }
 
 
-  //- Start
+  //- Drag Start
   function eleMouseDown(ev) {
     dispatchEvent('start');
     removeClass(element, 'dragNdrop--stop');
@@ -447,7 +458,7 @@ var dragNdrop = function(options) {
   }
 
 
-  //- Stop
+  //- Stop Drag / Pause
   function eleMouseUp() {
     dispatchEvent('stop');
     removeClass(element, 'dragNdrop--drag');
@@ -462,6 +473,10 @@ var dragNdrop = function(options) {
     //style resets
     element.style.zIndex = parseInt(element.style.zIndex) - 1;
     document.body.style.cursor = documentCursorStyles;
+  }
+
+  function pause() {
+    eleMouseUp();
   }
 
 
@@ -517,6 +532,33 @@ var dragNdrop = function(options) {
 
     // check manually instead of using .some to support IE9-
     return (dropped.length > 0) ? dropped : false;
+  }
+
+
+  // Teardown
+  function stop() {
+    removeClasses(element);
+    removeEventListeners();
+    if( element.style.cursor === 'col-resize' ||
+        element.style.cursor === 'row-resize' ||
+        element.style.cursor === 'move' ) {
+      element.style.cursor = 'auto';
+    }
+    if(document.addEventListener) {
+      element.removeEventListener('mousedown', eleMouseDown, false);
+      element.removeEventListener('touchstart', eleMouseDown, false);
+    } else {  //fix for IE8-
+      element.detachEvent('onmousedown', eleMouseDown);
+      element.detachEvent('touchstart', eleMouseDown);
+    }
+  }
+
+  function removeClasses(element) {
+    removeClass(element, 'dragNdrop');
+    removeClass(element, 'dragNdrop--drag');
+    removeClass(element, 'dragNdrop--stop');
+    removeClass(element, 'dragNdrop--dropped');
+    removeClass(element, 'dragNdrop--dropable');
   }
 
 
@@ -639,6 +681,36 @@ var dragNdrop = function(options) {
     }
   }
   querySelectorPolyfill();
+
+
+  var DND = {
+    setupDropZones: setupDropZones,
+    getDropZones: getDropZones,
+    getElement: getElement,
+    start: start,
+    setupClasses: setupClasses,
+    setStyles: setStyles,
+    setCustomStyles: setCustomStyles,
+    setupEventListeners: setupEventListeners,
+    eleMouseDown: eleMouseDown,
+    getStartingPositions: getStartingPositions,
+    addEventListeners: addEventListeners,
+    eleMouseMove: eleMouseMove,
+    getPositions: getPositions,
+    handleMoveElement: handleMoveElement,
+    handleConstraints: handleConstraints,
+    moveElement: moveElement,
+    isElementInside: isElementInside,
+    putElementBack: putElementBack,
+    eleMouseUp: eleMouseUp,
+    pause: pause,
+    removeEventListeners: removeEventListeners,
+    prepareDrop: prepareDrop,
+    handleDrop: handleDrop,
+    stop: stop,
+    removeClasses: removeClasses
+  };
+  return DND;
 };
 
 // make exportable
