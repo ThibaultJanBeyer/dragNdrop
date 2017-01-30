@@ -146,3 +146,9 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 ###Have Fun!
 
 [![Typewriter Gif](https://thibaultjanbeyer.github.io/dragNdrop/typewriter.gif)](http://thibaultjanbeyer.com/)
+
+
+# Last Words
+
+Don’t forget to **star this repo** if you like the plugin, that’s what keeps me running.
+Found a bug? Open an [issue](https://github.com/ThibaultJanBeyer/dragNdrop/issues) or make a pull requests!
