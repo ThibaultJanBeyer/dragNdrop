@@ -28,14 +28,16 @@ easily add drag and drop functionality to your dom nodes elements
 
 ##Why?
 
-Because there was nothing this fast that does not require jquery out there.
+Because there was nothing this fast with such high browser support that does not require jquery out there.
 
+![drag and drop demo](dragNdrop.gif)
 
 ##1. Installation
 
 ###easy
 
-Just [download the file](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dragNdrop.js) ([minified](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dNd.min.js)) and add it to your document:  
+Just [download the file](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dragNdrop.js) ([minified](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dNd.min.js)) and add it to your document:
+
 ```html
 <script src="https://thibaultjanbeyer.github.io/dragNdrop/dNd.min.js"></script>
 ```
@@ -55,24 +57,25 @@ bower install --save-dev dragndrop
 That's it, you're ready to rock!  
 Of course you can also just include the function within your code to save a request.
 
-
 ##Usage
 
 Now in your JavaScript you can simply pass elements to the function like so:
 
 **simple**
+
 ```javascript
 dragNdrop({
-  element: document.getElementById('element1'), // draggable element
-  dropZones: [ document.getElementById('dropContainer1') ] // dropzone (optional)
+  element: document.getElementById("element1"), // draggable element
+  dropZones: [document.getElementById("dropContainer1")] // dropzone (optional)
 });
 ```
+
 **complete**
+
 ```javascript
 var dnd = dragNdrop({
-
   // element to be dragged (single DOM element) // (optional, default: '#dragNdrop-element')
-  element: document.getElementById('element1'),
+  element: document.getElementById("element1"),
 
   // custom styles (false / true) // (optional, default: false)
   customStyles: false,
@@ -84,24 +87,24 @@ var dnd = dragNdrop({
   constraints: false,
 
   // drop (false / DOM element) // (optional, default: false)
-  dropZones: [ document.getElementById('dropContainer1'), '.myClass' ],
+  dropZones: [document.getElementById("dropContainer1"), ".myClass"],
   // also valid = dropZones: '.myClass'
 
   // callback(event){}
-  callback: function(event) { // (optional)
+  callback: function(event) {
+    // (optional)
     // event.element, event.dropped, event.dropZones, event.constraints, event.customStyles
   }
-
 });
 
 // if you add the function to a variable like we did, you have access to all its functions
 // and can now use start(), pause() and stop() like so:
-dnd.pause();  // will stop the dragging process
-dnd.stop();  // will teardown/stop the whole functionality
-dnd.start();  // reset the functionality after a teardown
+dnd.pause(); // will stop the dragging process
+dnd.stop(); // will teardown/stop the whole functionality
+dnd.start(); // reset the functionality after a teardown
 ```
-Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for more examples.
 
+Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for more examples.
 
 ##Properties:
 | property | type | usage |
@@ -139,9 +142,9 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |.dragNdrop--stop |on element release |
 |.dragNdrop--dropped |on successful element drop into container |
 |.dragNdrop--dropable |on element that can be dropped into at least one container |
-|.dragNdrop__dropzone |on each dropZone |
-|.dragNdrop__dropzone--ready |on corresponding dropZone when element is dragged |
-|.dragNdrop__dropzone--dropped |on dropZone when an element is successfully dropped inside |
+|.dragNdrop**dropzone |on each dropZone |
+|.dragNdrop**dropzone--ready |on corresponding dropZone when element is dragged |
+|.dragNdrop\_\_dropzone--dropped |on dropZone when an element is successfully dropped inside |
 
 ###Have Fun!
 
