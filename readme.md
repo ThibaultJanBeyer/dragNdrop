@@ -7,15 +7,15 @@
                  |___/                      |_|
 ```
 
-#dragNdrop
+# dragNdrop
 
 easily add drag and drop functionality to your dom nodes elements
 
-##Project Page: Demo & Info
+## Project Page: Demo & Info
 
 [https://thibaultjanbeyer.github.io/dragNdrop/](https://thibaultjanbeyer.github.io/dragNdrop/)
 
-##Key-Features
+## Key-Features
 
 - Add draggability to any DOM element
 - Add corresponding drop containers
@@ -26,15 +26,15 @@ easily add drag and drop functionality to your dom nodes elements
 - Performance: dragNdrop uses hardware accelerated css by default which makes it hyper fast. (gracefully falls back to normal position manipulation if browser doesn’t support it)
 - Free & open source under MIT License
 
-##Why?
+## Why?
 
 Because there was nothing this fast with such high browser support that does not require jquery out there.
 
 ![drag and drop demo](dragNdrop.gif)
 
-##1. Installation
+## 1. Installation
 
-###easy
+### easy
 
 Just [download the file](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dragNdrop.js) ([minified](https://github.com/ThibaultJanBeyer/dragNdrop/blob/master/dist/dNd.min.js)) and add it to your document:
 
@@ -42,13 +42,13 @@ Just [download the file](https://github.com/ThibaultJanBeyer/dragNdrop/blob/mast
 <script src="https://thibaultjanbeyer.github.io/dragNdrop/dNd.min.js"></script>
 ```
 
-###npm
+### npm
 
 ```
 npm install --save-dev npm-dragndrop
 ```
 
-###bower
+### bower
 
 ```
 bower install --save-dev dragndrop
@@ -57,7 +57,8 @@ bower install --save-dev dragndrop
 That's it, you're ready to rock!  
 Of course you can also just include the function within your code to save a request.
 
-##Usage
+
+## Usage
 
 Now in your JavaScript you can simply pass elements to the function like so:
 
@@ -106,7 +107,8 @@ dnd.start(); // reset the functionality after a teardown
 
 Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for more examples.
 
-##Properties:
+## Properties:
+
 | property | type | usage |
 |--- |--- |--- |
 |element |single DOM element (node) |the element that will be draggable |
@@ -116,7 +118,8 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |dropZones |false / array of DOM element(s) or CSS selector(s) (node(s)/selector(s)) |one or more drop-elements (where the element can be dropped into) |
 |callback |function |a callback function (taking an event object) that gets fired when the element is dropped |
 
-##Callback Event Object:
+## Callback Event Object:
+
 | event.property | usage |
 |--- |--- |
 |element |the element that was dropped |
@@ -125,7 +128,8 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |constraints |false / 'x' / 'y' / single DOM element |
 |dropZones |As array of DOM elements containing all drop-zones where the element can be dropped into |
 
-##Events
+## Events
+
 | name | trigger |
 |--- |--- |
 |dragNdrop:start |user click/tap the element |
@@ -133,7 +137,8 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |dragNdrop:stop |user releases the element |
 |dragNdrop:dropped |element was dropped into a drop-container |
 
-##Classes
+## Classes
+
 | name | trigger |
 |--- |--- |
 |.dragNdrop |on every draggable element |
@@ -146,6 +151,12 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 |.dragNdrop**dropzone--ready |on corresponding dropZone when element is dragged |
 |.dragNdrop\_\_dropzone--dropped |on dropZone when an element is successfully dropped inside |
 
-###Have Fun!
+### Have Fun!
 
 [![Typewriter Gif](https://thibaultjanbeyer.github.io/dragNdrop/typewriter.gif)](http://thibaultjanbeyer.com/)
+
+
+# Last Words
+
+Don’t forget to **star this repo** if you like the plugin, that’s what keeps me running.
+Found a bug? Open an [issue](https://github.com/ThibaultJanBeyer/dragNdrop/issues) or make a pull requests!
