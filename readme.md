@@ -32,6 +32,8 @@ Because there was nothing this fast with such high browser support that does not
 
 ![drag and drop demo](dragNdrop.gif)
 
+*Note: if you're looking for a solution to drag and drop multiple elements, check out [DragSelect](https://dragselect.com/)*
+
 ## 1. Installation
 
 ### easy
