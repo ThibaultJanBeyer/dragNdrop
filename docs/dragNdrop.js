@@ -1,6 +1,6 @@
 /* 
 
-v1.3.0
+v1.3.1
      _                     __    _                 
   __| |_ __ __ _  __ _  /\ \ \__| |_ __ ___  _ __  
  / _` | '__/ _` |/ _` |/  \/ / _` | '__/ _ \| '_ \ 
@@ -159,7 +159,7 @@ var dragNdrop = function(options) {
   //- Start
   function start() {
     setupEventListeners(elementHandle || element);
-    setStyles(element);
+    setStyles(element, elementHandle);
     setupClasses();
   }
   start();
@@ -176,16 +176,17 @@ var dragNdrop = function(options) {
 
 
   //- Styles
-  function setStyles(element) {
+  function setStyles(element, elementHandle) {
     if(customStyles) {
       setCustomStyles(element);
     } else {
       element.style.position = (!useTransform) ? 'relative' : 'auto';
       element.style.zIndex = '999';
-      if(constraints && constraints === 'x' || constraints === 'y') {
-        element.style.cursor = constraints === 'x' ? 'col-resize' : 'row-resize';
+      var cursorElement = elementHandle || element;
+      if (constraints && constraints === 'x' || constraints === 'y') {
+        cursorElement.style.cursor = constraints === 'x' ? 'col-resize' : 'row-resize';
       } else {
-        element.style.cursor = 'move';
+        cursorElement.style.cursor = 'move';
       }
     }
   }

@@ -1,4 +1,4 @@
-# 1.3.0
+# 1.3.1
 
 Added element handle to dnd whole elements by using a handle instead of the whole element
 
