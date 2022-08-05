@@ -1,6 +1,6 @@
 /* 
 
-v1.2.0
+v1.3.0
      _                     __    _                 
   __| |_ __ __ _  __ _  /\ \ \__| |_ __ ___  _ __  
  / _` | '__/ _` |/ _` |/  \/ / _` | '__/ _ \| '_ \ 
@@ -47,7 +47,8 @@ v1.2.0
 
  Properties
 
- ** @element        node            single DOM element                              (Mandatory!) default: NaN
+ ** @element        node            single DOM element that will be dragged         (Mandatory!) default: NaN
+ ** @elementHandle  node            single DOM element to handle the drag           (optional) default: NaN
  ** @customStyles   boolean         false / true                                    (optional) default: false
  ** @useTransform   boolean         true / false                                    (optional) default: true
  ** @constraints    string or node  false / 'x' / 'y' / single DOM element          (optional) default: false
@@ -98,6 +99,7 @@ var dragNdrop = function(options) {
 
   //Setup
   var element = options.element;
+  var elementHandle = options.elementHandle;
   var customStyles = options.customStyles;
   var constraints = options.constraints;
   var dropZones = setupDropZones(options.dropZones);
@@ -156,7 +158,7 @@ var dragNdrop = function(options) {
 
   //- Start
   function start() {
-    setupEventListeners(element);
+    setupEventListeners(elementHandle || element);
     setStyles(element);
     setupClasses();
   }

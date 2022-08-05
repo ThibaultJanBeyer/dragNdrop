@@ -80,6 +80,9 @@ var dnd = dragNdrop({
   // element to be dragged (single DOM element) // (optional, default: '#dragNdrop-element')
   element: document.getElementById("element1"),
 
+  // element to handle the drag. I.e. you want only one element to react to dragging (single DOM element) // (optional)
+  elementHandle: document.getElementById("element1handle"),
+
   // custom styles (false / true) // (optional, default: false)
   customStyles: false,
 
@@ -114,11 +117,12 @@ Check out the [examples page](https://thibaultjanbeyer.github.io/dragNdrop/) for
 | property | type | usage |
 |--- |--- |--- |
 |element |single DOM element (node) |the element that will be draggable |
-|customStyles |false / true (boolean) |when set to true, the styles you give the element will overwrite those from the plugin |
-|useTransform |true / false (boolean) |use hardware accelerated css (translate3d) or not (default: true) |
-|constraints |false / 'x' / 'y' / single DOM element (boolean/ string/ node) |constrain the element: 'x' = element can only be dragged on the x axis. 'y' = element can only be dragged on the y axis. DOM element = element can only be dragged within that container |
-|dropZones |false / array of DOM element(s) or CSS selector(s) (node(s)/selector(s)) |one or more drop-elements (where the element can be dropped into) |
-|callback |function |a callback function (taking an event object) that gets fired when the element is dropped |
+|elementHandle |single DOM element (node) (optional) |element to handle the drag. I.e. you want only one element to react to dragging |
+|customStyles |false / true (boolean) (optional) |when set to true, the styles you give the element will overwrite those from the plugin |
+|useTransform |true / false (boolean) (optional) |use hardware accelerated css (translate3d) or not (default: true) |
+|constraints |false / 'x' / 'y' / single DOM element (boolean/ string/ node) (optional) |constrain the element: 'x' = element can only be dragged on the x axis. 'y' = element can only be dragged on the y axis. DOM element = element can only be dragged within that container |
+|dropZones |false / array of DOM element(s) or CSS selector(s) (node(s)/selector(s)) (optional) |one or more drop-elements (where the element can be dropped into) |
+|callback |function (optional) |a callback function (taking an event object) that gets fired when the element is dropped |
 
 ## Callback Event Object:
 

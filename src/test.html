@@ -93,6 +93,12 @@
 <body>
 <div id="element2" class="elements"></div>
 <div id="element" class="elements"></div>
+
+<div id="element3" class="elements">
+  <div style="background: red" id="element3handle">O</div>
+  I have a handle
+</div>
+
 <i class="drops">Testo</i>
 <input type="text" class="drops">
 <input type="button" value="just a fake button">
@@ -127,6 +133,11 @@
   dragNdrop({
     element: document.getElementById('element2'),
     constraints: document.getElementById('container')
+  });
+
+  dragNdrop({
+    element: document.getElementById('element3'),
+    elementHandle: document.getElementById('element3handle')
   });
 
   setTimeout(function() {
