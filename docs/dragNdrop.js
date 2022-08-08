@@ -1,6 +1,6 @@
 /* 
 
-v1.3.1
+v1.3.2
      _                     __    _                 
   __| |_ __ __ _  __ _  /\ \ \__| |_ __ ___  _ __  
  / _` | '__/ _` |/ _` |/  \/ / _` | '__/ _ \| '_ \ 
@@ -233,7 +233,15 @@ var dragNdrop = function(options) {
       element.attachEvent('touchstart', eleMouseDown);
     }
   }
-
+  function removeEventListeners(element) {
+    if(document.addEventListener) {
+      element.removeEventListener('mousedown', eleMouseDown, false);
+      element.removeEventListener('touchstart', eleMouseDown, false);
+    } else {  //fix for IE8-
+      element.detachEvent('onmousedown', eleMouseDown);
+      element.detachEvent('touchstart', eleMouseDown);
+    }
+  }
 
   //- Drag Start
   function eleMouseDown(ev) {
@@ -252,7 +260,7 @@ var dragNdrop = function(options) {
     var docStyles = document.body.style;
     docStyles.cursor = (docStyles.cursor && docStyles.cursor !== 'inherit') ? docStyles.cursor : element.style.cursor;
 
-    addEventListeners();
+    addDocumentEventListeners();
   }
 
   function getStartingPositions(element, event) {
@@ -279,7 +287,7 @@ var dragNdrop = function(options) {
 
 
   //- add event listeners
-  function addEventListeners() {
+  function addDocumentEventListeners() {
     //Add listeners
     if(document.addEventListener) {
       document.addEventListener('mousemove', eleMouseMove, false);
@@ -471,7 +479,7 @@ var dragNdrop = function(options) {
     if(dropZones) dropped = handleDrop(element, dropZones);
     if(callback) callback({element: element, dropped: dropped, dropZones: dropZones, constraints: constraints, customStyles: customStyles, useTransform: useTransform});
 
-    removeEventListeners();
+    removeDocumentEventListeners();
 
     //style resets
     element.style.zIndex = parseInt(element.style.zIndex) - 1;
@@ -484,7 +492,7 @@ var dragNdrop = function(options) {
 
 
   //- remove event listeners
-  function removeEventListeners() {
+  function removeDocumentEventListeners() {
     //remove listeners
     if(document.addEventListener) {
       document.removeEventListener('mousemove', eleMouseMove, false);
@@ -541,18 +549,14 @@ var dragNdrop = function(options) {
   // Teardown
   function stop() {
     removeClasses(element);
-    removeEventListeners();
-    if( element.style.cursor === 'col-resize' ||
-        element.style.cursor === 'row-resize' ||
-        element.style.cursor === 'move' ) {
-      element.style.cursor = 'auto';
-    }
-    if(document.addEventListener) {
-      element.removeEventListener('mousedown', eleMouseDown, false);
-      element.removeEventListener('touchstart', eleMouseDown, false);
-    } else {  //fix for IE8-
-      element.detachEvent('onmousedown', eleMouseDown);
-      element.detachEvent('touchstart', eleMouseDown);
+    removeDocumentEventListeners();
+
+    var el = elementHandle || element
+    removeEventListeners(el)
+    if( el.style.cursor === 'col-resize' ||
+        el.style.cursor === 'row-resize' ||
+        el.style.cursor === 'move' ) {
+      el.style.cursor = 'auto';
     }
   }
 
@@ -697,7 +701,7 @@ var dragNdrop = function(options) {
     setupEventListeners: setupEventListeners,
     eleMouseDown: eleMouseDown,
     getStartingPositions: getStartingPositions,
-    addEventListeners: addEventListeners,
+    addDocumentEventListeners: addDocumentEventListeners,
     eleMouseMove: eleMouseMove,
     getPositions: getPositions,
     handleMoveElement: handleMoveElement,
@@ -707,7 +711,7 @@ var dragNdrop = function(options) {
     putElementBack: putElementBack,
     eleMouseUp: eleMouseUp,
     pause: pause,
-    removeEventListeners: removeEventListeners,
+    removeDocumentEventListeners: removeDocumentEventListeners,
     prepareDrop: prepareDrop,
     handleDrop: handleDrop,
     stop: stop,
