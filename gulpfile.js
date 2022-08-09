@@ -16,13 +16,6 @@ gulp.task('js', function () {
     .pipe(uglify())
     .pipe(rename('dNd.min.js'))
     .pipe(gulp.dest('./dist/'));
-  gulp.src('./src/dragNdrop.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    .pipe(gulp.dest('./docs/'))
-    .pipe(uglify())
-    .pipe(rename('dNd.min.js'))
-    .pipe(gulp.dest('./docs/'));
 });
 
 gulp.task('css', function () {
@@ -30,10 +23,6 @@ gulp.task('css', function () {
     .pipe(autoprefixer())
     .pipe(csso())
     .pipe(gulp.dest('./dist/'));
-  gulp.src('./src/example.css')
-    .pipe(autoprefixer())
-    .pipe(csso())
-    .pipe(gulp.dest('./docs/'));
 });
 
 gulp.task('html', function () {
@@ -41,10 +30,6 @@ gulp.task('html', function () {
     .pipe(htmlhint())
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('./dist/'));
-  gulp.src('./src/index.html')
-    .pipe(htmlhint())
-    .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(gulp.dest('./docs/'));
 });
 
 gulp.task('deploy', function () {
